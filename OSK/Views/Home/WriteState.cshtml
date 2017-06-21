@@ -5,12 +5,14 @@
 <html>
 <head>
     <title>Заявление</title>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 </head>
 <body>
     <div>
         <h3>Форма подачи заявки</h3>
         <p>Чтобы подать заявку необходимо заполнить все следующие поля:</p>
-        <form method="post">
+        <div class="text-danger" id="recaptchaError"></div>
+        <form id="addEventForm" method="post">
             <input type="hidden" value="@ViewBag.Statement" name="StateID" />
             <table>
                 <tr>
@@ -45,9 +47,21 @@
                     <td>Время конца(ЧЧ-ММ):</td>
                     <td><input type="time" name="Event_End"/></td>
                 </tr>
-                <tr><td><input type="submit" value="Подать заявку" /> </td></tr>
+                <tr><td>
+                    <button
+                        class="g-recaptcha"
+                        data-sitekey="6LdgWSYUAAAAAJTLTCIOUBU5gmK_U0UmaJIGbehq"
+                        data-callback="submitCallback">
+                        Отправить заявку
+                    </button>
+                </td></tr>
             </table>
         </form>
     </div>
+    <script>
+        function submitCallback(token) {
+            document.getElementById("addEventForm").submit();
+        }
+    </script>
 </body>
 </html>

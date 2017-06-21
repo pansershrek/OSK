@@ -24,12 +24,13 @@ namespace OSK.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        
         public IActionResult WriteState(Statement st)
         {
 
             //Отправляем запрос на Google календарь
+
             Authoriz calend = new Authoriz();
             calend.cal_event(st);
             return LocalRedirectPermanent("~/Home/Ty");
