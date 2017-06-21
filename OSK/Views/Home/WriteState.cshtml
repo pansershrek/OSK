@@ -1,0 +1,45 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Заявление</title>
+</head>
+<body>
+    <div>
+        <h3>Форма подачи заявки</h3>
+        <p>Чтобы подать заявку необходимо заполнить все следующие поля:</p>
+        <form method="post">
+            <input type="hidden" value="@ViewBag.Statement" name="StateID" />
+            <table>
+                <tr>
+                    <td>ФИО:</td>
+                    <td><input type="text" name="Name"</td>
+                </tr>
+                <tr>
+                    <td>Организация:</td>
+                    <td><input type="text" name="Organization"</td>
+                </tr>
+                <tr>
+                    <td>Описание мероприятия</td>
+                    <td><input type="text" name="Summary"</td>
+                </tr>
+                <tr>
+                    <td>Место проведения мероприятия</td>
+                    <td><input type="text" name="Location"</td>
+                </tr>
+                <tr>
+                    <td>Начало:</td>
+                    <td><input type="date" name="Event_Begin"</td>
+                </tr>
+                <tr>
+                    <td>Конец:</td>
+                    <td><input type="date" name="Event_End"</td>
+                </tr>
+                <tr><td><input type="submit" value="Отправить" /> </td></tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
