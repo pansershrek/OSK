@@ -35,3 +35,20 @@ textarea {
         display: none;
     }
 }
+
+
+#addEventSection {
+    margin-bottom: 40px;
+}
+
+#addEventSection input {
+    padding: 2px 7px;
+    box-shadow: none;
+    border: 1px solid #bbb;
+    border-radius: 2px
+}
+
+#addEventSection table td {
+    vertical-align: middle;
+    padding: 5px
+}
