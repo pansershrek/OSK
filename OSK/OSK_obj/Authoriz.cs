@@ -79,7 +79,7 @@ namespace OSK
                 return 1;
             }
             newEvent.Summary = "На рассмотрении " + St.Name + " " + St.Phone + " " + St.Organization + " " + St.Summary;
-            String calendarId = "primary";
+            String calendarId = "osk.msu@gmail.com";
             EventsResource.InsertRequest request = service.Events.Insert(newEvent, calendarId);
             Event createdEvent = request.Execute();
 
