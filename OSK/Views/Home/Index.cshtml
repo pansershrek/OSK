@@ -1,14 +1,68 @@
-﻿@{
-    Layout = null;
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration configuration
+@{
+    ViewData["Title"] = "OSKShedule";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Главная страница</title>
-</head>
-<body>
-    <h1><a href="~/Home/WriteState">Подать заявку</a></h1>
-    <h1><a href="~/Home/Calend">Открыть календарь</a></h1>
-</body>
-   
-</html>
+    <section id="addEventSection">
+        <h2>Подать заявку</h2>
+        <p>Чтобы подать заявку необходимо заполнить все следующие поля:</p>
+        <div class="text-danger" id="recaptchaError">@ViewData["Message"]</div>
+        <form id="addEventForm" method="post">
+            <input type="hidden" value="@ViewBag.Statement" name="StateID" />
+            <table>
+                <tr>
+                    <td>ФИО:</td>
+                    <td><input type="text" name="Name" /></td>
+                </tr>
+                <tr>
+                    <td>Номер телефона:</td>
+                    <td><input type="text" name="Phone" /></td>
+                </tr>
+                <tr>
+                    <td>Организация:</td>
+                    <td><input type="text" name="Organization" /></td>
+                </tr>
+                <tr>
+                    <td>Описание мероприятия</td>
+                    <td><input type="text" name="Summary" /></td>
+                </tr>
+                <tr>
+                    <td>Место проведения мероприятия</td>
+                    <td><input type="text" name="Location" /></td>
+                </tr>
+                <tr>
+                    <td>День проведения(ГГГГ-ММ-ДД):</td>
+                    <td><input type="date" name="Day" /></td>
+                </tr>
+                <tr>
+                    <td>Время начала(ЧЧ-ММ):</td>
+                    <td><input type="time" name="Event_Begin" /></td>
+                </tr>
+                <tr>
+                    <td>Время конца(ЧЧ-ММ):</td>
+                    <td><input type="time" name="Event_End" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="g-recaptcha"
+                                data-sitekey="@(configuration["ReCaptcha:SiteKey"])"
+                                data-callback="submitCallback">
+                            Отправить заявку
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <script>
+            function submitCallback(token) {
+                document.getElementById("addEventForm").submit();
+            }
+        </script>
+        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+    </section>
+    <section>
+        <h2>Текущий календарь событий</h2>
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=oskcalendartest%40gmail.com&amp;color=%231B887A&amp;ctz=Europe%2FMoscow"
+                style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    </section> 
+
+    

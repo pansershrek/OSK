@@ -12,14 +12,6 @@ namespace OSK.Controllers
         {
             return View();
         }
-        public IActionResult WriteState()
-        {
-            return View();
-        }
-        public IActionResult Calend()
-        {
-            return View();
-        }
         public IActionResult Ty()
         {
             return View();
@@ -27,7 +19,7 @@ namespace OSK.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(ValidateReCaptchaAttribute))]
-        public IActionResult WriteState(Statement st)
+        public IActionResult Index(Statement st)
         {
             if (ModelState.IsValid)
             {
