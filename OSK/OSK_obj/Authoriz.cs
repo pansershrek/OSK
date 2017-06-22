@@ -6,25 +6,38 @@ using Google.Apis.Calendar.v3;
 using Google.Apis.Util.Store;
 using Google.Apis.Services;
 using Google.Apis.Calendar.v3.Data;
-
+using Newtonsoft.Json;
 namespace OSK
 {
+    public class PersonalServiceAccountCred
+    {
+        public string type { get; set; }
+        public string project_id { get; set; }
+        public string private_key_id { get; set; }
+        public string private_key { get; set; }
+        public string client_email { get; set; }
+        public string client_id { get; set; }
+        public string auth_uri { get; set; }
+        public string token_uri { get; set; }
+        public string auth_provider_x509_cert_url { get; set; }
+        public string client_x509_cert_url { get; set; }
+    }
     public class Authoriz
     {
-        private static string[] Scopes = { CalendarService.Scope.Calendar };
+        private static string[] scopes = { CalendarService.Scope.Calendar };
         private static string ApplicationName = "GoogleCalendarAPIStart";
         private static string res_way = "";
-        private static UserCredential GetUserCredential()
+        private static ServiceAccountCredential GetUserCredential()
         {
-            using (var stream = new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
+            var json = File.ReadAllText("client_secret.json");
+            var cr = JsonConvert.DeserializeObject<PersonalServiceAccountCred>(json); // "personal" service account credential
+
+            // Create an explicit ServiceAccountCredential credential
+            var xCred = new ServiceAccountCredential(new ServiceAccountCredential.Initializer(cr.client_email)
             {
-                //string[] Scopes = { CalendarService.Scope.Calendar };
-                //string res_way = "C:\\Users\\Petrel\\Documents\\Visual Studio 2017\\Projects\\ConsoleApp3\\ConsoleApp3\\auto_res.json";
-                return GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "User",
-                    CancellationToken.None).Result;
-            }
+                Scopes = scopes
+            }.FromPrivateKey(cr.private_key));
+            return xCred;
         }
         /*static Event newEvent = new Event()
         {
@@ -48,7 +61,7 @@ namespace OSK
         };*/
         public int cal_event(Statement St)
         {
-            UserCredential credential = GetUserCredential();
+            ServiceAccountCredential credential = GetUserCredential();
             var service = new CalendarService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
