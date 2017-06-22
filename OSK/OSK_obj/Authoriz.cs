@@ -46,7 +46,7 @@ namespace OSK
                 TimeZone = "Europe/Moscow",
             }
         };*/
-        public void cal_event(Statement St)
+        public int cal_event(Statement St)
         {
             UserCredential credential = GetUserCredential();
             var service = new CalendarService(new BaseClientService.Initializer()
@@ -56,12 +56,21 @@ namespace OSK
             });
             Event newEvent = new Event();
             newEvent.Location = St.Location;
-            newEvent.Start = new EventDateTime() { DateTime = DateTime.Parse(St.Day + "T" + St.Event_Begin), TimeZone = "Europe/Moscow" };
-            newEvent.End = new EventDateTime() { DateTime = DateTime.Parse(St.Day + "T" + St.Event_End), TimeZone = "Europe/Moscow" };
-            newEvent.Summary = St.Name + " " + St.Phone + " " + St.Organization + " " + St.Summary;
+            try
+            {
+                newEvent.Start = new EventDateTime() { DateTime = DateTime.Parse(St.Day + "T" + St.Event_Begin), TimeZone = "Europe/Moscow" };
+                newEvent.End = new EventDateTime() { DateTime = DateTime.Parse(St.Day + "T" + St.Event_End), TimeZone = "Europe/Moscow" };
+            }
+            catch(Exception)
+            {
+                return 1;
+            }
+            newEvent.Summary = "На рассмотрении " + St.Name + " " + St.Phone + " " + St.Organization + " " + St.Summary;
             String calendarId = "primary";
             EventsResource.InsertRequest request = service.Events.Insert(newEvent, calendarId);
             Event createdEvent = request.Execute();
+
+            return 0;
         }
 
     }

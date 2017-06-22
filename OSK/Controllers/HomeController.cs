@@ -21,11 +21,10 @@ namespace OSK.Controllers
         [ServiceFilter(typeof(ValidateReCaptchaAttribute))]
         public IActionResult Index(Statement st)
         {
-            if (ModelState.IsValid)
+            Authoriz calend = new Authoriz();
+            if (ModelState.IsValid && calend.cal_event(st)==0)
             {
-                //Отправляем запрос на Google календарь
-                Authoriz calend = new Authoriz();
-                calend.cal_event(st);
+                
                 return LocalRedirectPermanent("~/Home/Ty");
             }
             else
@@ -36,6 +35,9 @@ namespace OSK.Controllers
 
             
         }
-
+        /*public string Index(Statement st)
+        {
+            return st.Day + "kek" + st.Event_Begin;
+        }*/
     }
 }
