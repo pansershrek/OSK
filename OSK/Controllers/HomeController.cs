@@ -24,15 +24,24 @@ namespace OSK.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        
+        [ServiceFilter(typeof(ValidateReCaptchaAttribute))]
         public IActionResult WriteState(Statement st)
         {
+            if (ModelState.IsValid)
+            {
+                //Отправляем запрос на Google календарь
+                Authoriz calend = new Authoriz();
+                calend.cal_event(st);
+                return LocalRedirectPermanent("~/Home/Ty");
+            }
+            else
+            {
+                @ViewData["Message"] = "Invalid!!!";
+                return View();
+            }
 
-            //Отправляем запрос на Google календарь
-            Authoriz calend = new Authoriz();
-            calend.cal_event(st);
-            return LocalRedirectPermanent("~/Home/Ty");
             
         }
 

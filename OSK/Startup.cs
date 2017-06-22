@@ -37,6 +37,10 @@ namespace OSK
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSingleton<IConfigurationRoot>(Configuration);
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddScoped<ValidateReCaptchaAttribute>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

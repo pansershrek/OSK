@@ -7,23 +7,23 @@ using Google.Apis.Util.Store;
 using Google.Apis.Services;
 using Google.Apis.Calendar.v3.Data;
 
+namespace OSK
+{
     public class Authoriz
     {
         private static string[] Scopes = { CalendarService.Scope.Calendar };
         private static string ApplicationName = "GoogleCalendarAPIStart";
-        private static string res_way = "C:\\Users\\Petrel\\Documents\\Visual Studio 2017\\Projects\\OSK\\OSK\\auto_res.json";
+        private static string res_way = "";
         private static UserCredential GetUserCredential()
         {
             using (var stream = new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
             {
                 //string[] Scopes = { CalendarService.Scope.Calendar };
                 //string res_way = "C:\\Users\\Petrel\\Documents\\Visual Studio 2017\\Projects\\ConsoleApp3\\ConsoleApp3\\auto_res.json";
-                res_way = Path.Combine(res_way, "driveAPICalendar", "drives-credentials.json");
                 return GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
                     "User",
-                    CancellationToken.None,
-                    new FileDataStore(res_way, true)).Result;
+                    CancellationToken.None).Result;
             }
         }
         /*static Event newEvent = new Event()
@@ -56,12 +56,13 @@ using Google.Apis.Calendar.v3.Data;
             });
             Event newEvent = new Event();
             newEvent.Location = St.Location;
-            newEvent.Start = new EventDateTime() { DateTime = DateTime.Parse(St.Day+"T"+St.Event_Begin), TimeZone = "Europe/Moscow" };
-            newEvent.End = new EventDateTime() { DateTime = DateTime.Parse(St.Day+"T"+St.Event_End), TimeZone = "Europe/Moscow" };
-            newEvent.Summary = St.Name + " " +St.Phone+" "+ St.Organization + " " + St.Summary;
+            newEvent.Start = new EventDateTime() { DateTime = DateTime.Parse(St.Day + "T" + St.Event_Begin), TimeZone = "Europe/Moscow" };
+            newEvent.End = new EventDateTime() { DateTime = DateTime.Parse(St.Day + "T" + St.Event_End), TimeZone = "Europe/Moscow" };
+            newEvent.Summary = St.Name + " " + St.Phone + " " + St.Organization + " " + St.Summary;
             String calendarId = "primary";
             EventsResource.InsertRequest request = service.Events.Insert(newEvent, calendarId);
             Event createdEvent = request.Execute();
         }
 
     }
+}
