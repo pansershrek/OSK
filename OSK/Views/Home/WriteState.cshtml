@@ -1,4 +1,5 @@
-﻿@{
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration configuration
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -11,7 +12,7 @@
     <div>
         <h3>Форма подачи заявки</h3>
         <p>Чтобы подать заявку необходимо заполнить все следующие поля:</p>
-        <div class="text-danger" id="recaptchaError"></div>
+        <div class="text-danger" id="recaptchaError">@ViewData["Message"]</div>
         <form id="addEventForm" method="post">
             <input type="hidden" value="@ViewBag.Statement" name="StateID" />
             <table>
@@ -50,7 +51,7 @@
                 <tr><td>
                     <button
                         class="g-recaptcha"
-                        data-sitekey="6LdgWSYUAAAAAJTLTCIOUBU5gmK_U0UmaJIGbehq"
+                        data-sitekey="@(configuration["ReCaptcha:SiteKey"])"
                         data-callback="submitCallback">
                         Отправить заявку
                     </button>

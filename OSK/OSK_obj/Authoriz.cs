@@ -7,6 +7,8 @@ using Google.Apis.Util.Store;
 using Google.Apis.Services;
 using Google.Apis.Calendar.v3.Data;
 
+namespace OSK
+{
     public class Authoriz
     {
         private static string[] Scopes = { CalendarService.Scope.Calendar };
@@ -54,12 +56,13 @@ using Google.Apis.Calendar.v3.Data;
             });
             Event newEvent = new Event();
             newEvent.Location = St.Location;
-            newEvent.Start = new EventDateTime() { DateTime = DateTime.Parse(St.Day+"T"+St.Event_Begin), TimeZone = "Europe/Moscow" };
-            newEvent.End = new EventDateTime() { DateTime = DateTime.Parse(St.Day+"T"+St.Event_End), TimeZone = "Europe/Moscow" };
-            newEvent.Summary = St.Name + " " +St.Phone+" "+ St.Organization + " " + St.Summary;
+            newEvent.Start = new EventDateTime() { DateTime = DateTime.Parse(St.Day + "T" + St.Event_Begin), TimeZone = "Europe/Moscow" };
+            newEvent.End = new EventDateTime() { DateTime = DateTime.Parse(St.Day + "T" + St.Event_End), TimeZone = "Europe/Moscow" };
+            newEvent.Summary = St.Name + " " + St.Phone + " " + St.Organization + " " + St.Summary;
             String calendarId = "primary";
             EventsResource.InsertRequest request = service.Events.Insert(newEvent, calendarId);
             Event createdEvent = request.Execute();
         }
 
     }
+}
